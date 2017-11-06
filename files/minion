@@ -1,0 +1,20 @@
+# supertylerc: Masterless.
+file_client: local
+
+file_roots:
+  base:
+    - /srv/salt/
+
+# supertylerc: Set a `git` backend so the `epel` formula can be used.
+fileserver_backend:
+  - git
+  - roots
+
+pillar_roots:
+  base:
+    - /srv/pillar
+
+# Formulas used for building the base image
+gitfs_remotes:
+  - https://github.com/saltstack-formulas/epel-formula
+  - https://github.com/supertylerc/lldpd-formula
