@@ -17,6 +17,38 @@ function setup_yum() {
   yum -y update
 }
 
+function dependencies() {
+  # supertylerc: had trouble with some of these being installed during kickstart
+  #              possibly due to them being unavailable from the net intsall?
+  yum -y install \
+    perl \
+    cpp \
+    libselinux-python \
+    cifs-utils \
+    patch \
+    glibc-headers \
+    glibc-devel \
+    gcc \
+    bzip2 \
+    dkms \
+    wget \
+    vim \
+    kernel-headers \
+    kernel-devel \
+    zlib-devel \
+    openssl-devel \
+    readline-devel
+}
+
+function guest_additions() {
+  mkdir /tmp/vbox
+  mount -o loop /home/vagrant/VBoxGuestAdditions_*.iso /tmp/vbox
+  sh /tmp/vbox/VBoxLinuxAdditions.run
+  umount /tmp/vbox
+  rm /home/vagrant/VBoxGuestAdditions_*.iso
+  rm -rf /tmp/vbox
+}
+
 function install() {
   # supertylerc: Install all of the Salt packages, plus `git` and
   #              `python-setuptools` so we can install `pip` and
