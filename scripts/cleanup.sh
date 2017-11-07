@@ -1,6 +1,10 @@
 #!/bin/bash -eux
 
 function clean_yum() {
+  yum -y remove \
+    cpp \
+    kernel-devel \
+    kernel-headers
   yum clean all
   rm -rf /var/cache/yum
 }
