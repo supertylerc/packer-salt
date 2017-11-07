@@ -1,7 +1,7 @@
 {
     "variables": {
         "vagrant_token": "{{env `VAGRANT_TOKEN`}}",
-        "version": "0.1.0",
+        "version": "0.1.6",
         "iso_url": "http://www.gtlib.gatech.edu/pub/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso",
         "iso_checksum_url": "http://www.gtlib.gatech.edu/pub/centos/7/isos/x86_64/sha256sum.txt"
     },
@@ -19,7 +19,7 @@
         {
             "type": "shell",
             "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
-            "script": "{{pwd}}scripts/cleanup.sh"
+            "script": "{{pwd}}/scripts/cleanup.sh"
         }
     ],
     "builders": [{
@@ -27,14 +27,15 @@
         "boot_command": [
             "<tab> ",
             "text ",
-            "ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg",
+            "ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg ",
+            "net.ifnames=0",
             "<enter>",
             "<wait>"
         ],
         "boot_wait": "10s",
-        "disk_size": 81920,
-        "guest_os_type": "RedHat_64",
         "headless": true,
+        "disk_size": 40000,
+        "guest_os_type": "RedHat_64",
         "http_directory": "http",
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum_type": "sha256",
@@ -45,7 +46,6 @@
         "ssh_wait_timeout": "10000s",
         "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
         "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
-        "virtualbox_version_file": ".vbox_version",
         "vm_name": "packer-salt-centos-7-x86_64",
         "vboxmanage": [
             [
