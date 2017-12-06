@@ -99,13 +99,31 @@ function setup_ssh_key() {
   chown -R vagrant:vagrant /home/vagrant/.ssh/
 }
 
+function setup_napalm() {
+  echo "127.0.0.1 salt.example.com" >> /etc/hosts
+  echo "127.0.0.1 salt" >> /etc/hosts
+
+  hostnamectl set-hostname salt.example.com
+
+  pip install napalm-base napalm-junos napalm-nxos napalm-iosxr
+
+  firewall-cmd --permanent --zone=public --add-port=4505-4506/tcp
+  firewall-cmd --reload
+
+  hostname > /etc/salt/minion_id
+}
+
 function main() {
+  local image="${1}"
   setup_ssh_key
   setup_yum
   dependencies
   guest_additions
   install
   backup
+  if [[ "${image}" == "napalm" ]]; then
+    setup_napalm
+  fi
 }
 
-main
+main "${1}"

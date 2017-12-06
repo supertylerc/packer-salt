@@ -29,11 +29,19 @@ function clean_salt() {
   rm -rf /srv/pillar/*
 }
 
+function finalize_napalm() {
+  systemctl restart salt-master
+  systemctl enable salt-master
+}
+
 function main() {
   clean_yum
   clean_salt
   restore_configs
+  if [[ "${1}" == "napalm" ]]; then
+    finalize_napalm
+  fi
   zero
 }
 
-main
+main "${1}"
