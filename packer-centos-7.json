@@ -1,9 +1,8 @@
 {
     "variables": {
-        "vagrant_token": "{{env `VAGRANT_TOKEN`}}",
-        "version": "0.1.6",
-        "iso_url": "http://www.gtlib.gatech.edu/pub/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso",
-        "iso_checksum_url": "http://www.gtlib.gatech.edu/pub/centos/7/isos/x86_64/sha256sum.txt"
+        "version": "0.1.7",
+        "iso_url": "http://mirror.it.ubc.ca/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso",
+        "iso_checksum_url": "http://mirror.it.ubc.ca/centos/7/isos/x86_64/sha256sum.txt"
     },
     "provisioners": [{
             "type": "shell",
